@@ -49,26 +49,16 @@ def _merged(xs, ys, cmp=cmp_standard):
     i, j = 0, 0 
     l = []
     while i < len(xs) and j < len(ys):
-        if cmp(xs[i], ys[j]) == -1:
+        if xs[i] <= ys[j]:
             l.append(xs[i])
             i += 1
-        if cmp(xs[i], ys[j]) == 1:
+        else:
             l.append(ys[j])
             j += 1
-        if cmp(xs[i], ys[j]) == 0:
-            l.append(xs[i])
-            l.append(ys[j])
-            i += 1
-            j += 1
-
-    while j < len(ys):
-        l.append(ys[j])
-        j += 1
-
-    while i < len(xs):
-        l.append(xs[i])
-        i += 1
-
+    if i < len(xs):
+        l.extend(xs[i:])
+    if j < len(ys):
+        l.extend(ys[j:])
     return l
 
 def merge_sorted(xs, cmp=cmp_standard):
