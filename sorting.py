@@ -88,15 +88,14 @@ def merge_sorted(xs, cmp=cmp_standard):
     if len(xs) <= 1:
         return xs
 
-    else:
-        middle = len(xs)//2
-        left = xs[:middle]
-        right = xs[middle:]
+    middle = len(xs)//2
+    left = xs[:middle]
+    right = xs[middle:]
 
-        l = merge_sorted(left, cmp)
-        r = merge_sorted(right, cmp)
+    l = merge_sorted(left, cmp)
+    r = merge_sorted(right, cmp)
         
-        return _merged(l, r, cmp)
+    return _merged(l, r, cmp)
 
 def quick_sorted(xs, cmp=cmp_standard):
     '''
