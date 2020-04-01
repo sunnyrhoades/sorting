@@ -118,7 +118,23 @@ def quick_sorted(xs, cmp=cmp_standard):
 
     You should return a sorted version of the input list xs
     '''
-
+    less = []
+    pivot_list = []
+    more = []
+    if len(xs) <= 1:
+        return xs
+    else:
+        pivot = xs[0]
+        for i in xs:
+            if i < pivot:
+                less.append(i)
+            elif i > pivot:
+                more.append(i)
+            else:
+                pivot_list.append(i)
+        less = quick_sorted(less)
+        more = quick_sorted(more)
+        return less + pivot_list + more
 
 def quick_sort(xs, cmp=cmp_standard):
     '''
