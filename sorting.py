@@ -49,16 +49,25 @@ def _merged(xs, ys, cmp=cmp_standard):
     i, j = 0, 0 
     l = []
     while i < len(xs) and j < len(ys):
-        if xs[i] <= ys[j]:
+        c = cmp(xs[i], ys[j])
+        if c == -1:
             l.append(xs[i])
             i += 1
-        else:
+        if c == 0:
+            l.append(xs[i])
+            l.append(ys[j])
+            i += 1
+            j += 1
+        if c == 1:
             l.append(ys[j])
             j += 1
-    if i < len(xs):
-        l.extend(xs[i:])
-    if j < len(ys):
-        l.extend(ys[j:])
+
+    while i < len(xs):
+        l.append(xs[i])
+        i += 1
+    while j < len(ys):
+        l.append(ys[j])
+        j += 1
     return l
 
 def merge_sorted(xs, cmp=cmp_standard):
@@ -79,13 +88,15 @@ def merge_sorted(xs, cmp=cmp_standard):
     if len(xs) <= 1:
         return xs
 
-    middle = len(xs)//2
-    left = xs[:middle]
-    right = xs[middle:]
+    else:
+        middle = len(xs)//2
+        left = xs[:middle]
+        right = xs[middle:]
 
-    l = merge_sorted(left, cmp=cmp)
-    r = merge_sorted(right, cmp=cmp)
-    return list(_merged(l, r))
+        l = merge_sorted(left, cmp)
+        r = merge_sorted(right, cmp)
+        
+        return _merged(l, r, cmp)
 
 def quick_sorted(xs, cmp=cmp_standard):
     '''
@@ -116,14 +127,15 @@ def quick_sorted(xs, cmp=cmp_standard):
     else:
         pivot = xs[0]
         for i in xs:
-            if i < pivot:
-                less.append(i)
-            elif i > pivot:
-                more.append(i)
-            else:
-                pivot_list.append(i)
-        less = quick_sorted(less)
-        more = quick_sorted(more)
+            c = cmp(pivot, xs[i])
+            if c == -1:
+                more.append(xs[i])
+            if c == 0:
+                pivot_list.append(xs[i])
+            if c == 1:
+                less.append(xs[i])
+        less = quick_sorted(less, cmp)
+        more = quick_sorted(more, cmp)
         return less + pivot_list + more
 
 def quick_sort(xs, cmp=cmp_standard):
