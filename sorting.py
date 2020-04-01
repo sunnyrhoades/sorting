@@ -95,7 +95,7 @@ def merge_sorted(xs, cmp=cmp_standard):
         l = merge_sorted(left, cmp=cmp)
         r = merge_sorted(right, cmp=cmp)
     
-    return _merged(l, r)
+        return _merged(l, r)
 
 def quick_sorted(xs, cmp=cmp_standard):
     '''
