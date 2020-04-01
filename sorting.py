@@ -125,7 +125,7 @@ def quick_sorted(xs, cmp=cmp_standard):
         return xs
     else:
         pivot = xs[0]
-        for i in xs:
+        for i in range(len(xs)):
             c = cmp(pivot, xs[i])
             if c == -1:
                 more.append(xs[i])
